@@ -15,7 +15,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'buoy_parse'
+gem 'buoy_parse',  git: 'https://github.com/massrb/buoy_parse.git'
 ```
 
 And then execute:
@@ -24,11 +24,13 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install buoy_parse
+    $ gem install buoy_parse -l https://github.com/massrb/buoy_parse.git
 
 ## Usage
 
-Western Maine Shelf
+require 'buoy_parse'
+
+parse Western Maine Shelf buoy:
 
 BuoyParse.parse_station(44030).print
 - Time Of Conditions: 7:04 pm EDT
@@ -44,7 +46,7 @@ BuoyParse.parse_station(44030).print
 - Visibility: 1.6 nmi
 - Wind Chill: 6.1 &deg;F
 
-Nantucket:
+parse Nantucket buoy:
 
 BuoyParse.parse_station(44020).print
 
@@ -63,7 +65,7 @@ BuoyParse.parse_station(44020).print
 - Dew Point: 10.9 &deg;F
 
 
-Mantauk NY:
+parse Mantauk NY buoy:
 
 BuoyParse.parse_station(44017).print
 
@@ -73,7 +75,7 @@ BuoyParse.parse_station(44017).print
 - Mean Wave Direction: W ( 264 deg true )
 
 
-Isle of Shoals Weather Station:
+parse Isle of Shoals Weather Station:
 
 BuoyParse.parse_station('iosn3').print
 
@@ -86,6 +88,16 @@ BuoyParse.parse_station('iosn3').print
 - Wind Chill: 5.7 &deg;F
 - Pressure Tendency: +0.05 in ( Rising )
 - Dew Point: -4.7 &deg;F
+
+rec = BuoyParse.parse_station('iosn3')
+p rec
+#<BuoyParse:0x296fb38 @timeof_conditions="8:00 pm EDT on 03/22/2015", @wdir="
+ NW ", @wspd="   25 kts", @gst="   29 kts", @pres="29.97 in", @ptdy="+0.08 in (
+Rising )", @atmp=" 21.6 &deg;F", @dewp=" -5.1 &deg;F">
+
+puts rec.wdir
+NW
+
 
 
 ## Contributing
