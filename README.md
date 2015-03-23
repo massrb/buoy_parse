@@ -5,6 +5,8 @@
   
  BuoyParse gem was created by isolating specific code from an older Rails app that served
  Buoy Report data as WMS content for cell phone browsers.
+ 
+ This gem was created using ruby 1.9.3p484 on windows
 
  
  Example of an NOAA buoy website for Nantucket:
@@ -26,7 +28,7 @@ And then execute:
     $ bundle
 
 Or install it yourself as:
-
+    $ gem install hpricot
     $ gem install buoy_parse -l https://github.com/massrb/buoy_parse.git
 
 ## Usage
