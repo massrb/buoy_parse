@@ -97,10 +97,10 @@ class BuoyParse
     if fldName == 'wdir'      
      # remove extraneous notes from wind direction field
       if (mat = /(.*)\(.*\)/.match(val))
-        val = mat[1].to_s.strip
+        val = mat[1]
       end
     end  
-    instance_variable_set("@#{fldName}", val)
+    instance_variable_set("@#{fldName}", val.to_s.strip)
     self.class.send(:attr_accessor, fldName)
   end
   
