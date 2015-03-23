@@ -9,58 +9,58 @@
  
 # Western Maine Shelf
 BuoyParse.parse_station(44030).print
--Time Of Conditions: 7:04 pm EDT
--Wind Direction: NW
--Wind Speed: 23.3 kts
--Wind Gusts: 29.1 kts
--Wave Height: 3.9 ft
--Dominant Wave Period: 4 sec
--Air Pressue: 29.94 in
--Air Temprature: 23.0 &deg;F
--Water Temprature: 37.2 &deg;F
--Salinity: 32.90 psu
--Visibility: 1.6 nmi
--Wind Chill: 6.1 &deg;F
+- Time Of Conditions: 7:04 pm EDT
+- Wind Direction: NW
+- Wind Speed: 23.3 kts
+- Wind Gusts: 29.1 kts
+- Wave Height: 3.9 ft
+- Dominant Wave Period: 4 sec
+- Air Pressue: 29.94 in
+- Air Temprature: 23.0 &deg;F
+- Water Temprature: 37.2 &deg;F
+- Salinity: 32.90 psu
+- Visibility: 1.6 nmi
+- Wind Chill: 6.1 &deg;F
 
 # Nantucket
 BuoyParse.parse_station(44020).print
 
--Time Of Conditions: 7:50 pm EDT
--Wind Direction: WNW
--Wind Speed: 17.5 kts
--Wind Gusts: 19.4 kts
--Wave Height: 3.0 ft
--Dominant Wave Period: 4 sec
--Air Pressue: 29.99 in
--Air Temprature: 32.2 &deg;F
--Water Temprature: 34.0 &deg;F
--Wind Chill: 20.1 &deg;F
--Mean Wave Direction: WNW ( 284 deg true )
--Pressure Tendency: +0.07 in ( Rising )
--Dew Point: 10.9 &deg;F
+- Time Of Conditions: 7:50 pm EDT
+- Wind Direction: WNW
+- Wind Speed: 17.5 kts
+- Wind Gusts: 19.4 kts
+- Wave Height: 3.0 ft
+- Dominant Wave Period: 4 sec
+- Air Pressue: 29.99 in
+- Air Temprature: 32.2 &deg;F
+- Water Temprature: 34.0 &deg;F
+- Wind Chill: 20.1 &deg;F
+- Mean Wave Direction: WNW ( 284 deg true )
+- Pressure Tendency: +0.07 in ( Rising )
+- Dew Point: 10.9 &deg;F
 
 
 # Mantauk NY
 BuoyParse.parse_station(44017).print
 
--Time Of Conditions: 7:50 pm EDT
--Wave Height: 3.0 ft
--Dominant Wave Period: 4 sec
--Mean Wave Direction: W ( 264 deg true )
+- Time Of Conditions: 7:50 pm EDT
+- Wave Height: 3.0 ft
+- Dominant Wave Period: 4 sec
+- Mean Wave Direction: W ( 264 deg true )
 
 
 # Isle of Shoals Weather Station
 BuoyParse.parse_station('iosn3').print
 
--Time Of Conditions: 7:00 pm EDT
--Wind Direction: NW
--Wind Speed: 24 kts
--Wind Gusts: 27 kts
--Air Pressue: 29.94 in
--Air Temprature: 22.8 &deg;F
--Wind Chill: 5.7 &deg;F
--Pressure Tendency: +0.05 in ( Rising )
--Dew Point: -4.7 &deg;F
+- Time Of Conditions: 7:00 pm EDT
+- Wind Direction: NW
+- Wind Speed: 24 kts
+- Wind Gusts: 27 kts
+- Air Pressue: 29.94 in
+- Air Temprature: 22.8 &deg;F
+- Wind Chill: 5.7 &deg;F
+- Pressure Tendency: +0.05 in ( Rising )
+- Dew Point: -4.7 &deg;F
 
  
 
