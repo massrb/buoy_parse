@@ -7,6 +7,27 @@
  Example of an NOAA buoy website for Nantucket:
  http://www.ndbc.noaa.gov/station_page.php?station=44020
  
+
+ 
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'buoy_parse'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install buoy_parse
+
+## Usage
+
 Western Maine Shelf
 
 BuoyParse.parse_station(44030).print
@@ -66,27 +87,6 @@ BuoyParse.parse_station('iosn3').print
 - Pressure Tendency: +0.05 in ( Rising )
 - Dew Point: -4.7 &deg;F
 
- 
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'buoy_parse'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install buoy_parse
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
