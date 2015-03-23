@@ -7,7 +7,8 @@
  Example of an NOAA buoy website for Nantucket:
  http://www.ndbc.noaa.gov/station_page.php?station=44020
  
-# Western Maine Shelf
+Western Maine Shelf
+
 BuoyParse.parse_station(44030).print
 - Time Of Conditions: 7:04 pm EDT
 - Wind Direction: NW
@@ -22,7 +23,8 @@ BuoyParse.parse_station(44030).print
 - Visibility: 1.6 nmi
 - Wind Chill: 6.1 &deg;F
 
-# Nantucket
+Nantucket
+
 BuoyParse.parse_station(44020).print
 
 - Time Of Conditions: 7:50 pm EDT
@@ -40,7 +42,8 @@ BuoyParse.parse_station(44020).print
 - Dew Point: 10.9 &deg;F
 
 
-# Mantauk NY
+Mantauk NY
+
 BuoyParse.parse_station(44017).print
 
 - Time Of Conditions: 7:50 pm EDT
@@ -49,7 +52,8 @@ BuoyParse.parse_station(44017).print
 - Mean Wave Direction: W ( 264 deg true )
 
 
-# Isle of Shoals Weather Station
+Isle of Shoals Weather Station
+
 BuoyParse.parse_station('iosn3').print
 
 - Time Of Conditions: 7:00 pm EDT
