@@ -91,7 +91,7 @@ BuoyParse.parse_station('iosn3').print
 
 rec = BuoyParse.parse_station('iosn3')
 p rec
-#<BuoyParse:0x296fb38 @timeof_conditions="8:00 pm EDT on 03/22/2015", @wdir="
+<BuoyParse:0x296fb38 @timeof_conditions="8:00 pm EDT on 03/22/2015", @wdir="
  NW ", @wspd="   25 kts", @gst="   29 kts", @pres="29.97 in", @ptdy="+0.08 in (
 Rising )", @atmp=" 21.6 &deg;F", @dewp=" -5.1 &deg;F">
 
