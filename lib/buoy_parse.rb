@@ -57,6 +57,7 @@ class BuoyParse
       begin         
         if (mat = /Conditions at \S+ as of.*\((.*)\)/.match(tab.inner_html))
           instance_variable_set("@timeof_conditions",mat[1])
+          self.class.send(:attr_accessor, 'timeof_conditions')
         end
       rescue Exception => e
         puts "Error on parsing time of condition: #{e.message}"
