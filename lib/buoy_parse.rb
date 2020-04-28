@@ -1,5 +1,5 @@
 require "buoy_parse/version"
-require 'hpricot'
+require 'nokogiri'
 require 'open-uri'
 
 class BuoyParse
@@ -9,20 +9,20 @@ class BuoyParse
   
   # labels in NOAA html
   LABEL_MAP = {
-    :WDIR => "Wind Direction",
-    :WSPD => "Wind Speed",
-    :GST => "Wind Gusts",
-    :WVHT => "Wave Height",
-    :DPD => "Dominant Wave Period",
-    :PRES => "Air Pressue",
-    :PTDY => "Pressure Tendency",
-    :ATMP => "Air Temprature",
-    :WTMP => "Water Temprature",
-    :SAL => "Salinity",
-    :VIS => "Visibility",
-    :CHILL => "Wind Chill",
-    :MWD => "Mean Wave Direction",
-    :DEWP => "Dew Point"
+    WDIR: "Wind Direction",
+    WSPD: "Wind Speed",
+    GST: "Wind Gusts",
+    WVHT: "Wave Height",
+    DPD: "Dominant Wave Period",
+    PRES: "Air Pressue",
+    PTDY: "Pressure Tendency", 
+    ATMP: "Air Temprature",
+    WTMP: "Water Temprature",
+    SAL: "Salinity",
+    VIS:  "Visibility",
+    CHILL: "Wind Chill",
+    MWD: "Mean Wave Direction",
+    DEWP: "Dew Point"
   }
   
   def self.url_for(station_id)
@@ -49,26 +49,25 @@ class BuoyParse
   def parse(url)
     hdr = LABEL_MAP.keys.map{|ky| ky.to_s}
 
-    doc = Hpricot(open(url))  #{ |f| Hpricot(f) }
+    doc =  Nokogiri::HTML(open(url))  #{ |f| Hpricot(f) }
     tidx = 0
 
     doc.search("/html/body//table").each do |tab|
      
       begin         
         if (mat = /Conditions at \S+ as of.*\((.*)\)/.match(tab.inner_html))
-          instance_variable_set("@timeof_conditions",mat[1])
-          self.class.send(:attr_accessor, 'timeof_conditions')
+          setField('timeof_conditions', mat[1])
         end
       rescue Exception => e
         puts "Error on parsing time of condition: #{e.message}"
       end
-      haveLabel = false
-      fldName = "";
+      have_label = false
+      fld_name = "";
       if tidx == READINGS_TABLE_IDX
         (tab/'td').each do |data|
-          if haveLabel
-            setField(fldName, data.inner_html)
-            haveLabel = false
+          if have_label
+            setField(fld_name, data.inner_html)
+            have_label = false
           end
           begin
             if mat = /^.*\(([A-Z]+)\)/.match(data.inner_html)
@@ -76,9 +75,9 @@ class BuoyParse
               # <td>Wave Height (WVHT):</td>
               # save the field name if it is a known header value, 
               # the next td element will have the value
-              if hdr.any? {|itm| itm == mat[1]}
-                haveLabel = true
-                fldName = mat[1]
+              if hdr.any? { |itm| itm == mat[1] }
+                have_label = true
+                fld_name = mat[1]
               end
             end
           rescue Exception => e
@@ -93,22 +92,22 @@ class BuoyParse
   
   # set the instance field to be the same as
   # the header for the most part.
-  def setField(fieldName, val)
-    fldName = fieldName.downcase
-    if fldName == 'wdir'      
-     # remove extraneous notes from wind direction field
+  def setField(field_name, val)
+    fld_name = field_name.downcase
+    if fld_name == 'wdir'
+      # remove extraneous notes from wind direction field
       if (mat = /(.*)\(.*\)/.match(val))
         val = mat[1]
       end
-    end  
-    instance_variable_set("@#{fldName}", val.to_s.strip)
-    self.class.send(:attr_accessor, fldName)
+    end
+    instance_variable_set("@#{fld_name}", val.to_s.strip)
+    self.class.send(:attr_accessor, fld_name)
   end
-  
+
   def self.parse(url)
     rec = self.new
     rec.parse(url)
     rec
   end
-  
+
 end
