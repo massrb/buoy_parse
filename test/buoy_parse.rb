@@ -22,6 +22,7 @@ class BuoyParseTest < Minitest::Test
 
   def test_parse_buoy
     result = BuoyParse.parse_station(440)
+    result.print
     assert_equal result.wvht, '15.1 ft'
     assert_equal result.timeof_conditions, "6:04 pm EDT"
     assert_equal result.wdir, "NNE"

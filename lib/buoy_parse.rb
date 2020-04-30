@@ -33,24 +33,53 @@ class BuoyParse
     parse(url_for(station_id.to_s))
   end
   
-  def print
-    puts
+  def with_fields
     instance_variables.each do |ivar|
       fld = ivar.to_s.upcase
       fld[0] = '' # remove @ character
       fld = fld.to_sym
       label = LABEL_MAP[fld]
       label = "Time Of Conditions" if !label and fld.eql?(:TIMEOF_CONDITIONS)
-      puts  label + ": " + instance_variable_get(ivar).to_s.strip
+      label ||= fld.to_s.capitalize
+      yield label, instance_variable_get(ivar).to_s.strip
     end
-    puts 
   end
-  
+
+  def print
+    puts '---------'
+    with_fields do |label, val|
+       puts "#{label}: #{val}"
+    end
+    puts
+  end
+
+  def to_hash
+    hash = {}
+    with_fields do |label, val|
+      hash[label] = val
+    end
+    hash
+  end
+
   def parse(url)
     hdr = LABEL_MAP.keys.map{|ky| ky.to_s}
 
     doc =  Nokogiri::HTML(open(url))  #{ |f| Hpricot(f) }
     tidx = 0
+
+    desc = doc.at("meta[name='description']")['content']
+    if desc
+      desc.sub!("National Data Buoy Center - Recent observations from",'')
+      desc.strip!
+      setField('description', desc)
+      if desc =~ /\((\S+)\s+(\S+)\)/
+        location = [$1, $2]
+        if location.all?{ |n| n =~ /\d+\.\d+[[:alpha:]]/ || n =~ /\d+[[:alpha:]]/ }
+          setField('latitude', location[0])
+          setField('longitude', location[1])
+        end
+      end
+    end
 
     doc.search("/html/body//table").each do |tab|
      
