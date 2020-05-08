@@ -1,4 +1,6 @@
 require "buoy_parse/version"
+require "noaa_generator/generators/station_generator"
+
 require 'nokogiri'
 require 'open-uri'
 
