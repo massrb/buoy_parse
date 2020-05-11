@@ -2,7 +2,7 @@
 class CreateNoaaTables < ActiveRecord::Migration
   def self.up
 
-    create_table :noaa_stations do |t|
+    create_table :<%= @station_model %> do |t|
       t.column :number, :string, :limit => 30
       t.column :name, :string, :limit => 40
       t.column :area, :string, :limit => 2
@@ -12,7 +12,7 @@ class CreateNoaaTables < ActiveRecord::Migration
     end
 
 
-    create_table :readings do |t|
+    create_table :<%= reading_model %> do |t|
       t.column :noaa_station_id, :integer
       t.column :wdir, :string, :limit => 20
       t.column :wspd, :string, :limit => 20
