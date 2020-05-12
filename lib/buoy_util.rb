@@ -3,9 +3,9 @@ require File.expand_path '../buoy_parse.rb', __FILE__
 
 ListPath = File.expand_path '../../buoy_list.txt', __FILE__
 
-class BuoyUtil
+module BuoyUtil
 
-  def self.setup
+  def setup
     @allow_interupt = true
     @enqueued     = [ ]
     trap 'SIGINT' do
@@ -19,26 +19,22 @@ class BuoyUtil
     end
   end
 
-  def save_results
-
-  end
-
-  def self.enable_interupts
+  def enable_interupts
     @allow_interupt = true
     @enqueued.each { |signal| Process.kill(signal, 0) }
   end
 
-  def self.build_yaml_file
-    @map = {}
+  def load_buoys
     setup
     File.open(ListPath).each do |line|
       puts line
       id = line.strip
-      station = BuoyParse.parse_station(id)
+      @allow_interupt = false
+      station = parse_station(id)
       station.print
       puts '-----------------'
-      @map[id] = station.to_hash
-      puts @map[id].inspect
+      station.save!
+      @allow_interupt = true
       sleep 5
     end
     puts 'stubbed, no interupt'
