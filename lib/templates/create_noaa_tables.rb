@@ -6,9 +6,8 @@ class CreateNoaaTables < ActiveRecord::Migration[5.0]
       t.column :number, :string, :limit => 30
       t.column :name, :string, :limit => 40
       t.column :description, :string
-      t.column :area, :string, :limit => 2
-      t.column :weight, :string, :limit => 2
-      t.column :geo_location, :string
+      t.column :latitude, :string, :limit => 12
+      t.column :longitude, :string, :limit => 12
       t.timestamps
     end
 
@@ -17,6 +16,7 @@ class CreateNoaaTables < ActiveRecord::Migration[5.0]
       t.column :noaa_station_id, :integer
       t.column :wdir, :string, :limit => 20
       t.column :wspd, :string, :limit => 20
+      t.column :gst,  :string, :limit => 20
       t.column :wvht, :string, :limit => 20
       t.column :dpd, :string, :limit => 20
       t.column :apd, :string, :limit => 20

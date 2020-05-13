@@ -1,13 +1,8 @@
 # BuoyParse
 
  BuoyParse parses NOAA Buoy websites for recent wave, weather, and marine info.
- This gem uses Hpricot for parsing and at some point should be upgraded to Nokogiri.
-  
- BuoyParse gem was created by isolating specific code from an older Rails app that served
- Buoy Report data as WMS content for cell phone browsers.
- 
- This gem was created using ruby 1.9.3p484 on windows
-
+ This gem uses Nokogiri. It is in a state of work in progress and changes from older
+ implementations
  
  Example of an NOAA buoy website for Nantucket:
  http://www.ndbc.noaa.gov/station_page.php?station=44020
@@ -27,88 +22,17 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-    $ gem install hpricot
-    $ gem install buoy_parse -l https://github.com/massrb/buoy_parse.git
 
 ## Usage
 
 
-```ruby
+```rails
 
-irb> require 'buoy_parse'
+rails generator noaa:station noaa_station noaa_reading
 
-# parse Western Maine Shelf buoy:
+rails c
 
-irb> BuoyParse.parse_station(44030).print
-
-Time Of Conditions: 7:04 pm EDT
-Wind Direction: NW
-Wind Speed: 23.3 kts
-Wind Gusts: 29.1 kts
-Wave Height: 3.9 ft
-Dominant Wave Period: 4 sec
-Air Pressue: 29.94 in
-Air Temprature: 23.0 &deg;F
-Water Temprature: 37.2 &deg;F
-Salinity: 32.90 psu
-Visibility: 1.6 nmi
-Wind Chill: 6.1 &deg;F
-
-
-# parse Nantucket buoy:
-
-irb> BuoyParse.parse_station(44020).print
-
-Time Of Conditions: 7:50 pm EDT
-Wind Direction: WNW
-Wind Speed: 17.5 kts
-Wind Gusts: 19.4 kts
-Wave Height: 3.0 ft
-Dominant Wave Period: 4 sec
-Air Pressue: 29.99 in
-Air Temprature: 32.2 &deg;F
-Water Temprature: 34.0 &deg;F
-Wind Chill: 20.1 &deg;F
-Mean Wave Direction: WNW ( 284 deg true )
-Pressure Tendency: +0.07 in ( Rising )
-Dew Point: 10.9 &deg;F
-
-
-#parse Mantauk NY buoy:
-
-irb> BuoyParse.parse_station(44017).print
-
-Time Of Conditions: 7:50 pm EDT
-Wave Height: 3.0 ft
-Dominant Wave Period: 4 sec
-Mean Wave Direction: W ( 264 deg true )
-
-
-#parse Isle of Shoals Weather Station:
-
-irb> BuoyParse.parse_station('iosn3').print
-
-Time Of Conditions: 7:00 pm EDT
-Wind Direction: NW
-Wind Speed: 24 kts
-Wind Gusts: 27 kts
-Air Pressue: 29.94 in
-Air Temprature: 22.8 &deg;F
-Wind Chill: 5.7 &deg;F
-Pressure Tendency: +0.05 in ( Rising )
-Dew Point: -4.7 &deg;F
-
-
-irb> rec = BuoyParse.parse_station('iosn3')
-irb> p rec
-#<BuoyParse:0x296fb38 @timeof_conditions="8:00 pm EDT on 03/22/2015", @wdir="
- NW ", @wspd="25 kts", @gst="29 kts", @pres="29.97 in", @ptdy="+0.08 in (
-Rising )", @atmp=" 21.6 &deg;F", @dewp=" -5.1 &deg;F">
-
-irb> puts rec.wdir
-NW
-````
+irb(main):001:0> NoaaStation.load_buoys
 
 
 

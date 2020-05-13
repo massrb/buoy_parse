@@ -31,7 +31,7 @@ module BuoyUtil
       id = line.strip
       @allow_interupt = false
       station = parse_station(id)
-      station.print
+      puts station.inspect
       puts '-----------------'
       station.save!
       @allow_interupt = true
