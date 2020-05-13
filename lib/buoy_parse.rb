@@ -51,35 +51,6 @@ module BuoyParse
   # of the rails environment
   module ParseModule
   
-    def with_fields
-      @record.instance_variables.each do |ivar|
-        fld = ivar.to_s.upcase
-        fld[0] = '' # remove @ character
-        fld = fld.to_sym
-        label = LABEL_MAP[fld]
-        label = "Time Of Conditions" if !label and fld.eql?(:TIMEOF_CONDITIONS)
-        label ||= fld.to_s.capitalize
-        next if ['Association_cache'].include? label
-        yield label, instance_variable_get(ivar).to_s.strip
-      end
-    end
-
-    def print
-      puts '---------'
-      with_fields do |label, val|
-         puts "#{label}: #{val}"
-      end
-      puts
-    end
-
-    def to_hash
-      hash = {}
-      with_fields do |label, val|
-        hash[label] = val
-      end
-      hash
-    end
-
     def parse(url)
       @hdr = LABEL_MAP.keys.map{|ky| ky.to_s}
       @doc = Nokogiri::HTML(open(url))
