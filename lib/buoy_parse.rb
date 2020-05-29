@@ -5,7 +5,6 @@ require 'buoy_util'
 require 'nokogiri'
 require 'open-uri'
 
-
 module BuoyParse
 
   READINGS_TABLE_IDX = 4 # 4th table in html has readings
@@ -21,9 +20,9 @@ module BuoyParse
     PTDY: "Pressure Tendency", 
     ATMP: "Air Temprature",
     WTMP: "Water Temprature",
-    SAL: "Salinity",
-    VIS:  "Visibility",
-    CHILL: "Wind Chill",
+    # SAL: "Salinity",
+    # VIS:  "Visibility",
+    # CHILL: "Wind Chill",
     MWD: "Mean Wave Direction",
     # DEWP: "Dew Point"
   }
@@ -53,7 +52,14 @@ module BuoyParse
   
     def parse(url)
       @hdr = LABEL_MAP.keys.map{|ky| ky.to_s}
-      @doc = Nokogiri::HTML(open(url))
+      begin
+        @doc = Nokogiri::HTML(open(url))
+        rescue Exception => e
+          puts "Error on open, url:#{url} \n - #{e.message}\n\n\t" + 
+          e.backtrace[0..20].join("\n\t") + "\n\t.."
+          return nil
+      end
+
       @record = self
       @fld_count = 0
       if @record.attributes['description'].to_s.strip.empty?
@@ -61,10 +67,9 @@ module BuoyParse
       end
       
       if buoy_readings.count.zero? 
-        @record = buoy_readings_klass.new
+        @record = self.class.buoy_readings_klass.new
         parse_readings
         buoy_readings << @record if @fld_count > 0
-        puts "record:#{@record.inspect}\n\n"  if @fld_count > 0
       end  
     end
 
@@ -77,10 +82,23 @@ module BuoyParse
         desc.strip!
         setField('description', desc)
         if desc =~ /\((\S+)\s+(\S+)\)/
-          location = [$1, $2]
-          if location.all?{ |n| n =~ /\d+\.\d+[[:alpha:]]/ || n =~ /\d+[[:alpha:]]/ }
-            setField('latitude', location[0])
-            setField('longitude', location[1])
+          location = [$2, $1]
+          regx_dec =  /(\d+\.\d+)([E,W,N,S])/
+          regx =  /(\d+)([E,W,N,S])/
+          # the assignment to the field will be of this form
+          # lonlat = "POINT(-71.4313134 42.5891898)"
+
+          if location.all?{ |n| regx_dec.match(n) || regx.match(n) }
+            point = location.map do |loc| 
+              sign = nil
+              if loc =~ regx_dec
+                if ['S','W'].include? $2
+                  sign = '-'
+                end
+              end
+              "#{sign}#{$1}"
+            end
+            setField('lonlat', "POINT(#{point.join(' ')})")
           end
         end
         @record.save!

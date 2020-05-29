@@ -8,6 +8,7 @@ class CreateNoaaTables < ActiveRecord::Migration[5.0]
       t.column :description, :string
       t.column :latitude, :string, :limit => 12
       t.column :longitude, :string, :limit => 12
+      t.st_point :lonlat, geographic: true
       t.timestamps
     end
 

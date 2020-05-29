@@ -4,7 +4,13 @@ class <%= @station_model.camelize %> < ApplicationRecord
   extend BuoyParse
   has_many :<%= reading_model.pluralize %>
 
-  def buoy_readings_klass
+  scope :within, -> (latitude, longitude, distance_in_mile = 1) {
+    where(%{
+     ST_Distance(lonlat, 'POINT(%f %f)') < %d
+    } % [longitude, latitude, distance_in_mile * 1609.34]) # approx
+  }
+
+  def self.buoy_readings_klass
     <%= reading_model.camelize %>
   end
 

@@ -5,44 +5,21 @@ ListPath = File.expand_path '../../buoy_list.txt', __FILE__
 
 module BuoyUtil
 
-  def setup
-    @allow_interupt = true
-    @enqueued     = [ ]
-    trap 'SIGINT' do
-      if @allow_interupt
-        puts 'Exiting'
-        exit 130
-      else
-        puts 'ignore ctl-c'
-        @enqueued.push(signal)
-      end
-    end
-  end
-
-  def enable_interupts
-    @allow_interupt = true
-    @enqueued.each { |signal| Process.kill(signal, 0) }
-  end
-
   def load_buoys
-    setup
+    self.destroy_all
+    buoy_readings_klass.destroy_all
+
     File.open(ListPath).each do |line|
       puts line
       id = line.strip
-      @allow_interupt = false
       station = parse_station(id)
-      puts station.inspect
+      next unless station
+      puts "#{station.inspect}\n\n"
+      puts "#{station.buoy_readings.first.inspect}" if !station.buoy_readings.count.zero?
       puts '-----------------'
       station.save!
-      @allow_interupt = true
       sleep 5
     end
-    puts 'stubbed, no interupt'
-    @allow_interupt = false
-    sleep 10
-    puts 'allow'
-    enable_interupts
-    sleep 90
   end
 
 end
